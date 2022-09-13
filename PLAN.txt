@@ -1,0 +1,117 @@
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=
+CIS 120 HW07 README
+PennKey: 43140354
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=
+
+============
+=: Task 2 :=
+============
+
+- Do you plan on creating any new classes in your design? If so, what classes
+  are you making, what do they store, and what behaviors do they have?
+
+Yes, I plan to create a Channel class. Channels contain multiple sets of information which
+will be best stored a channel class separately. Information such as ownerName, privacy status and
+list of users that are present in a channel. Channel class will have various methods
+such getOwner(), removeUser(), changeNickName(), getPrivacy().
+For Users I do not plan to create a separate class since users can be stored in server model
+internal state by simply using a TreeMap. Users treeMap will have a IntegerKey and String name
+of User which will be value in the map itself. I do not see it necessary to create a user class.
+
+- How do you plan on storing what users are registered on the server?
+
+Users can be stored in a TreeMap as answered in question before this.
+
+- How do you plan on keeping track of which user has which user ID, considering
+  the fact that the user's nickname can change over the course of the program?
+
+Users can have a IntegerID which will act as "KEY" in the TreeMap. Whenever the user changes
+the name it wouldn't effect the key as the old name will simply be replaced with the new name
+but they key associated will remain in place.
+
+- How do you plan on storing what users are in a channel?
+
+Channel class will have a TreeSet that will contain all the names of users in that channel.
+
+- How do you plan on keeping track of which user is the owner of each channel?
+
+Channel class will have a private field called owner. This owner will be added in userList of
+channel, but it will always be stored in a separate string variable as well.
+
+- Justify your choice of collections (Set, Map, or List) for the
+  collections you use in your design.
+
+For Users, A Map seems appropriate because every user can have a associated key (IntegerID)
+as well as a value (String name). Changing value will not change their Key.
+For storing users in a channel I made a Set because users just need their names to be stored
+in channel userList. Additionally, removing or adding users seems easy in a Set. It will
+also not add any duplicate users therefore that should be very convenient.
+
+============
+=: Task 3 :=
+============
+
+- Did you make any changes to your design while doing this task? Why?
+
+Yes, I added a few methods in Channels class such as setNickname() which helps in changing nickname
+of a user when they change their name which was alraedy stored in a channel. I also added a
+contains() method to my Channel class which helps me find a user in userList in channel.
+I also added a method called getUserListExcept(String name) this method returns a list of users
+in the channel except for the user given in the parameter. All these methods added in channel
+class assist implementing methods in task 3.
+
+============
+=: Task 4 :=
+============
+
+- Did you make any changes to your design while doing this task? Why?
+
+Yes, I had to go back and take care of implementing comparable interface as well as overriding
+equals() and compareTo(). I also changed my contains() method implementation and instead of
+using default .conatins() of Set I decided to loop through the user list in channel and check for
+desired user myself.
+Additionally, for encapsulation, I had to change the implementation of getUserList() because
+before I was returning the userList in place and that was causing issues. Therefore, now I made
+a new Set and returned that in getUserList() method.
+I also went back and re-worked my solution for deregister from task 3 since it was failing some
+tests in task 4.
+
+============
+=: Task 5 :=
+============
+
+- How do you plan on keeping track of which channels are invite-only?
+
+I have a private field privacyPrivate in my channel class which is boolean. If its true
+then privacy is set to invite-only, if its false channel is considered public.
+
+- Will you make any changes to your work from before in order to make
+  implementing invite-only channels easier?
+
+I went back to my creatChannel and joinChannel and made sure that privacy is being
+taken care of. I added additional conditions to check if user is trying to join a private channel.
+
+============
+=: Task 6 :=
+============
+
+- Did you have to make any changes to your design in Task 6? Why?
+
+I had to go back and refactor some of my helper methods from task 4 because they seemed
+implemented inefficiently. I improved my for each loops, I added a few test cases to task 5 and 4
+and had to change the order of some of my code because it was causing issues such as deleting user
+before deleting from the channel and that was causing some null pointer exceptions. In terms of
+structure I did not change anything major.
+
+- If you were to redo this assignment, what changes (if any) would you make in
+  how you designed your code?
+
+I might make a user class as well as a channel class. In side the channel class, I will store users
+as user class instead of their string names. This should make updating user info easier since I
+will only have to change it in one class and other class will automatically update the user info.
+This will probably be more compact.
+I had to spend about hours on my deregister because I couldn't figure out why it wasn't deleting multiple
+channels created by user. By digging for hours I realized that I was getting ConcurrentModificationError
+which is thrown when collection is tried to be modified while a iterator is looping over it simultaneously.
+I later fixed it by creating a clone collection and altering the collection in place in a separate for loop.
+Great to know after hours.
