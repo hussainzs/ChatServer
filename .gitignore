@@ -1,2 +1,8 @@
 # Project exclude paths
 /target/
+.idea/
+.run/
+*.xml
+hw07.jar
+pom.xml
+MakeFile

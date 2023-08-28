@@ -148,7 +148,6 @@ public class Task3Test {
 
         Command create = new CreateCommand(0, "User0", "java", false);
         create.updateServerModel(model);
-        Command create2 = new CreateCommand(0, "User0", "java2", false);
         create.updateServerModel(model);
 
         Command join = new JoinCommand(1, "User1", "java");
